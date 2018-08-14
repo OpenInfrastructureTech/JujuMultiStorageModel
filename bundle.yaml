@@ -17,12 +17,8 @@ machines:
     series: bionic
   '8':
     series: bionic
-  '9':
-    series: bionic
 relations:
 - - nova-compute:amqp
-  - rabbitmq-server:amqp
-- - neutron-gateway:amqp
   - rabbitmq-server:amqp
 - - keystone:shared-db
   - mysql:shared-db
@@ -30,16 +26,6 @@ relations:
   - keystone:identity-service
 - - glance:identity-service
   - keystone:identity-service
-- - neutron-api:identity-service
-  - keystone:identity-service
-- - neutron-openvswitch:neutron-plugin-api
-  - neutron-api:neutron-plugin-api
-- - neutron-api:shared-db
-  - mysql:shared-db
-- - neutron-api:amqp
-  - rabbitmq-server:amqp
-- - neutron-gateway:neutron-plugin-api
-  - neutron-api:neutron-plugin-api
 - - glance:shared-db
   - mysql:shared-db
 - - glance:amqp
@@ -52,18 +38,10 @@ relations:
   - nova-compute:cloud-compute
 - - nova-cloud-controller:amqp
   - rabbitmq-server:amqp
-- - nova-cloud-controller:quantum-network-service
-  - neutron-gateway:quantum-network-service
-- - nova-compute:neutron-plugin
-  - neutron-openvswitch:neutron-plugin
-- - neutron-openvswitch:amqp
-  - rabbitmq-server:amqp
 - - openstack-dashboard:identity-service
   - keystone:identity-service
 - - nova-cloud-controller:shared-db
   - mysql:shared-db
-- - nova-cloud-controller:neutron-api
-  - neutron-api:neutron-api
 - - cinder:image-service
   - glance:image-service
 - - cinder:amqp
@@ -86,10 +64,6 @@ relations:
   - glance:ceph
 - - ceph-osd:mon
   - ceph-mon:osd
-- - ntp:juju-info
-  - nova-compute:juju-info
-- - ntp:juju-info
-  - neutron-gateway:juju-info
 - - ceph-radosgw:mon
   - ceph-mon:radosgw
 - - ceph-radosgw:identity-service
@@ -97,9 +71,6 @@ relations:
 series: bionic
 services:
   ceph-mon:
-    annotations:
-      gui-x: '750'
-      gui-y: '500'
     charm: cs:~openstack-charmers-next/bionic/ceph-mon
     num_units: 3
     options:
@@ -109,29 +80,20 @@ services:
     - '2'
     - '3'
   ceph-osd:
-    annotations:
-      gui-x: '1000'
-      gui-y: '500'
     charm: cs:~openstack-charmers-next/bionic/ceph-osd
     num_units: 3
     options:
-      osd-devices: /dev/sdb
+      osd-devices: /dev/vdb
     to:
     - '1'
     - '2'
     - '3'
   ceph-radosgw:
-    annotations:
-      gui-x: '1000'
-      gui-y: '250'
     charm: cs:~openstack-charmers-next/bionic/ceph-radosgw
     num_units: 1
     to:
     - 4
   cinder:
-    annotations:
-      gui-x: '750'
-      gui-y: '0'
     charm: cs:~openstack-charmers-next/bionic/cinder
     num_units: 1
     options:
@@ -141,17 +103,9 @@ services:
     to:
     - 4
   cinder-ceph:
-    annotations:
-      gui-x: '750'
-      gui-y: '250'
     charm: cs:~openstack-charmers-next/bionic/cinder-ceph
-    num_units: 1
-    to:
-    - 4
+    num_units: 0
   glance:
-    annotations:
-      gui-x: '250'
-      gui-y: '0'
     charm: cs:~openstack-charmers-next/bionic/glance
     num_units: 1
     options:
@@ -159,9 +113,6 @@ services:
     to:
     - 6
   keystone:
-    annotations:
-      gui-x: '500'
-      gui-y: '0'
     charm: cs:~openstack-charmers-next/bionic/keystone
     num_units: 1
     options:
@@ -169,31 +120,23 @@ services:
     to:
     - 7
   mysql:
-    annotations:
-      gui-x: '0'
-      gui-y: '250'
     charm: cs:~openstack-charmers-next/bionic/percona-cluster
     num_units: 1
     options:
       max-connections: 1000
       innodb-buffer-pool-size: 256M
+      min-cluster-size: 1
     to:
     - 7
   nova-cloud-controller:
-    annotations:
-      gui-x: '0'
-      gui-y: '500'
     charm: cs:~openstack-charmers-next/bionic/nova-cloud-controller
     num_units: 1
     options:
       network-manager: Neutron
       worker-multiplier: 0.25
     to:
-    - 8
+    - 5
   nova-compute:
-    annotations:
-      gui-x: '250'
-      gui-y: '250'
     charm: cs:~openstack-charmers-next/bionic/nova-compute
     num_units: 1
     options:
@@ -204,23 +147,14 @@ services:
     to:
     - '0'
   ntp:
-    annotations:
-      gui-x: '1000'
-      gui-y: '0'
     charm: cs:ntp
     num_units: 0
   openstack-dashboard:
-    annotations:
-      gui-x: '500'
-      gui-y: '-250'
     charm: cs:~openstack-charmers-next/bionic/openstack-dashboard
     num_units: 1
     to:
     - 8
   rabbitmq-server:
-    annotations:
-      gui-x: '500'
-      gui-y: '250'
     charm: cs:~openstack-charmers-next/bionic/rabbitmq-server
     num_units: 1
     to:
