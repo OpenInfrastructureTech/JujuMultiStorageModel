@@ -1,22 +1,22 @@
 machines:
   '0':
-    series: bionic
+    series: xenial
   '1':
-    series: bionic
+    series: xenial
   '2':
-    series: bionic
+    series: xenial
   '3':
-    series: bionic
+    series: xenial
   '4':
-    series: bionic
+    series: xenial
   '5':
-   6series: bionic
+   6series: xenial
   '6':
-    series: bionic
+    series: xenial
   '7':
-    series: bionic
+    series: xenial
   '8':
-    series: bionic
+    series: xenial
 relations:
 - - nova-compute:amqp
   - rabbitmq-server:amqp
@@ -68,10 +68,10 @@ relations:
   - ceph-mon:radosgw
 - - ceph-radosgw:identity-service
   - keystone:identity-service
-series: bionic
+series: xenial
 services:
   ceph-mon:
-    charm: cs:~openstack-charmers-next/bionic/ceph-mon
+    charm: cs:~openstack-charmers-next/xenial/ceph-mon
     num_units: 3
     options:
       expected-osd-count: 3
@@ -80,7 +80,7 @@ services:
     - '2'
     - '3'
   ceph-osd:
-    charm: cs:~openstack-charmers-next/bionic/ceph-osd
+    charm: cs:~openstack-charmers-next/xenial/ceph-osd
     num_units: 3
     options:
       osd-devices: /dev/vdb
@@ -89,12 +89,12 @@ services:
     - '2'
     - '3'
   ceph-radosgw:
-    charm: cs:~openstack-charmers-next/bionic/ceph-radosgw
+    charm: cs:~openstack-charmers-next/xenial/ceph-radosgw
     num_units: 1
     to:
     - 4
   cinder:
-    charm: cs:~openstack-charmers-next/bionic/cinder
+    charm: cs:~openstack-charmers-next/xenial/cinder
     num_units: 1
     options:
       block-device: None
@@ -103,24 +103,24 @@ services:
     to:
     - 4
   cinder-ceph:
-    charm: cs:~openstack-charmers-next/bionic/cinder-ceph
+    charm: cs:~openstack-charmers-next/xenial/cinder-ceph
     num_units: 0
   glance:
-    charm: cs:~openstack-charmers-next/bionic/glance
+    charm: cs:~openstack-charmers-next/xenial/glance
     num_units: 1
     options:
       worker-multiplier: 0.25
     to:
     - 6
   keystone:
-    charm: cs:~openstack-charmers-next/bionic/keystone
+    charm: cs:~openstack-charmers-next/xenial/keystone
     num_units: 1
     options:
       worker-multiplier: 0.25
     to:
     - 7
   mysql:
-    charm: cs:~openstack-charmers-next/bionic/percona-cluster
+    charm: cs:~openstack-charmers-next/xenial/percona-cluster
     num_units: 1
     options:
       max-connections: 1000
@@ -129,7 +129,7 @@ services:
     to:
     - 7
   nova-cloud-controller:
-    charm: cs:~openstack-charmers-next/bionic/nova-cloud-controller
+    charm: cs:~openstack-charmers-next/xenial/nova-cloud-controller
     num_units: 1
     options:
       network-manager: Neutron
@@ -137,7 +137,7 @@ services:
     to:
     - 5
   nova-compute:
-    charm: cs:~openstack-charmers-next/bionic/nova-compute
+    charm: cs:~openstack-charmers-next/xenial/nova-compute
     num_units: 1
     options:
       config-flags: default_ephemeral_format=ext4
@@ -150,12 +150,12 @@ services:
     charm: cs:ntp
     num_units: 0
   openstack-dashboard:
-    charm: cs:~openstack-charmers-next/bionic/openstack-dashboard
+    charm: cs:~openstack-charmers-next/xenial/openstack-dashboard
     num_units: 1
     to:
     - 8
   rabbitmq-server:
-    charm: cs:~openstack-charmers-next/bionic/rabbitmq-server
+    charm: cs:~openstack-charmers-next/xenial/rabbitmq-server
     num_units: 1
     to:
     - 8

@@ -1,10 +1,11 @@
-juju add-machine ssh:ubuntu@192.168.5.25
-juju add-machine ssh:ubuntu@192.168.5.23
-juju add-machine ssh:ubuntu@192.168.5.13
-juju add-machine ssh:ubuntu@192.168.5.22
-juju add-machine ssh:ubuntu@192.168.5.20
-juju add-machine ssh:ubuntu@192.168.5.8
-juju add-machine ssh:ubuntu@192.168.5.21
-juju add-machine ssh:ubuntu@192.168.5.14
-juju add-machine ssh:ubuntu@192.168.5.9
-juju add-machine ssh:ubuntu@192.168.5.6
+HOSTS=`openstack server list | grep 'wap-' | cut -c69-86`
+
+for i in $HOSTS
+do
+ssh ubuntu@$i uptime
+done
+
+for i in $HOSTS
+do
+juju add-machine ssh:ubuntu@$i
+done
