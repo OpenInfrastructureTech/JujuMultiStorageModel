@@ -118,7 +118,7 @@ services:
     options:
       worker-multiplier: 0.25
     to:
-    - 7
+    - 8
   mysql:
     charm: cs:~openstack-charmers-next/xenial/percona-cluster
     num_units: 1
