@@ -84,7 +84,6 @@ services:
     options:
       bluestore: false
       osd-devices: /dev/vdb
-      osd-reformat: 'yes'
     to:
     - '1'
   ceph-radosgw:
