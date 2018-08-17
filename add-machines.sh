@@ -1,4 +1,4 @@
-HOSTS=`openstack server list | grep 'wap-' | cut -c69-86`
+HOSTS=`openstack server list | grep ACTIVE | grep 'pap-' | cut -c69-86`
 
 for i in $HOSTS
 do
