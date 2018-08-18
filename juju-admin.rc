@@ -1,0 +1,12 @@
+# pulls gettings from Juju
+
+_keystone_unit=$(juju status keystone --format yaml | \
+    awk '/units:$/ {getline; gsub(/:$/, ""); print $1}')
+_password=$(juju run --unit ${_keystone_unit} 'leader-get admin_passwd')
+_keystone_ip=$(juju run --unit ${_keystone_unit} 'unit-get private-address')
+
+OS_PASSSWORD=${_password}
+OS_IDENTITY_API_VERSION=2
+OS_AUTH_URL=http://${_keystone_ip}:5000/v2.0
+OS_USERNAME=admin
+OS_TENANT_NAME=admin

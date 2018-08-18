@@ -1,0 +1,7 @@
+# hardwired RC file
+# update AUTH_URL accordingly
+OS_PASSSWORD=EboR2Choochiequi
+OS_IDENTITY_API_VERSION=2
+OS_AUTH_URL=http://192.168.5.19:5000/v2.0
+OS_USERNAME=admin
+OS_TENANT_NAME=admin
