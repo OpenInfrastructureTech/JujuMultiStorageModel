@@ -6,6 +6,6 @@ else
 fi
 openstack keypair delete juju
 openstack keypair create --public-key ~/.ssh/id_rsa.pub juju
-nova boot --flavor ceph --image xenial-server-cloudimg-amd64-disk1.img --nic net-name=juju-net --ephemeral size=80 --key-name juju --min 10 wap
-openstack server list -f csv | grep 'wap-'
+nova boot --flavor ceph --image xenial-server-cloudimg-amd64-disk1.img --nic net-name=juju-net --ephemeral size=80 --key-name juju --min 16 cat
+openstack server list -f csv | grep 'cat-'
 
