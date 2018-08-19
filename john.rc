@@ -1,0 +1,12 @@
+
+_keystone_unit=$(juju status keystone --format yaml | \
+    awk '/units:$/ {getline; gsub(/:$/, ""); print $1}')
+_keystone_ip=$(juju run --unit ${_keystone_unit} 'unit-get private-address')
+
+export OS_USER_DOMAIN_NAME=default
+export OS_PROJECT_NAME=services
+export OS_IDENTITY_API_VERSION=3
+export OS_PASSWORD=john
+export OS_AUTH_URL=http://$_keystone_ip:5000/v3
+export OS_USERNAME=john
+export OS_PROJECT_DOMAIN_NAME=default
